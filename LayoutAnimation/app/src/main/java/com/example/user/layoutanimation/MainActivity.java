@@ -1,5 +1,7 @@
 package com.example.user.layoutanimation;
 
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,6 +15,8 @@ import android.widget.RelativeLayout;
 public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout relativeLayout = null;
+
+    private LayoutTransition mLayoutTransition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,22 @@ public class MainActivity extends AppCompatActivity {
                 addABtn();
             }
         });
+
+        //创建
+        mLayoutTransition = new LayoutTransition();
+
+        relativeLayout.setLayoutTransition(mLayoutTransition);
+
+        mLayoutTransition.setStagger(LayoutTransition.CHANGE_DISAPPEARING, 30);
+
+        mLayoutTransition.setStagger(LayoutTransition.CHANGE_APPEARING, 30);
+
+        //动画持续时间500ms
+        mLayoutTransition.setDuration(500);
+
+        ObjectAnimator mAnimatorAppearing = ObjectAnimator.ofFloat(null, "rotationY", 90.0f,0.0f)
+                .setDuration(mLayoutTransition.getDuration(LayoutTransition.APPEARING));
+
     }
 
     @Override
