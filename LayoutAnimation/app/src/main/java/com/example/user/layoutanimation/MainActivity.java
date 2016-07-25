@@ -1,5 +1,7 @@
 package com.example.user.layoutanimation;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -49,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
         ObjectAnimator mAnimatorAppearing = ObjectAnimator.ofFloat(null, "rotationY", 90.0f,0.0f)
                 .setDuration(mLayoutTransition.getDuration(LayoutTransition.APPEARING));
+
+        mLayoutTransition.setAnimator(LayoutTransition.APPEARING,mAnimatorAppearing);
+
+        mAnimatorAppearing.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                View view = (View) ((ObjectAnimator)animation).getTarget();
+                view.setRotationY(0.0f);
+            }
+        });
 
     }
 
